@@ -1,10 +1,10 @@
 import json, random
 
 def lae_sõnad():
-    with open("words.json", "r", encoding="utf-8") as f:
+    with open("sõnastik.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
-def vali_küsimus(sonad):
+def vali_küsimus(sõnad):
     kategooria = random.choice(list(sõnad.keys()))
     sõna, tõlge = random.choice(list(sõnad[kategooria].items()))
     return kategooria, sõna, tõlge
