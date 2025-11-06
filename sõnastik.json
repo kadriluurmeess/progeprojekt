@@ -1,20 +1,30 @@
 {
-  "tervitused": {
-    "hola": "tere",
-    "adios": "head aega",
-    "gracias": "aitäh",
-    "por favor": "palun"
-  },
-  "värvid": {
-    "rojo": "punane",
-    "azul": "sinine",
-    "verde": "roheline",
-    "amarillo": "kollane"
-  },
-  "numbrid": {
-    "uno": "üks",
-    "dos": "kaks",
-    "tres": "kolm",
-    "cuatro": "neli"
-  }
+  "tervitused": [
+    {
+      "sõna": "hola",
+      "tõlge": "tere",
+      "selgitus": "Kasutatakse sõbraliku tervitusena igas olukorras, nii ametlikult kui mitte.",
+      "näide": "Hola, ¿cómo estás? - Tere, kuidas sul läheb?"
+    },
+    {
+      "sõna": "adios",
+      "tõlge": "head aega",
+      "selgitus": "Kasutatakse lahkumisel. Võib olla nii sõbralik kui neutraalne.",
+      "näide": "Adiós, nos vemos mañana. - Head aega, näeme homme."
+    },
+    {
+      "sõna": "gracias",
+      "tõlge": "aitäh",
+      "selgitus": "Viisakas viis tänada iga olukorra puhul.",
+      "näide": "Gracias por tu ayuda. - Aitäh su abi eest."
+    }
+  ],
+  "värvid": [
+    {
+      "sõna": "rojo",
+      "tõlge": "punane",
+      "selgitus": "Kasutatakse värvi kirjeldamiseks. Võib olla ka emotsionaalne (näiteks armastus, kirg).",
+      "näide": "La flor es roja. - Lill on punane."
+    }
+  ]
 }
