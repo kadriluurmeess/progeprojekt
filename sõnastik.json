@@ -1,0 +1,20 @@
+{
+  "tervitused": {
+    "hola": "tere",
+    "adios": "head aega",
+    "gracias": "aitäh",
+    "por favor": "palun"
+  },
+  "värvid": {
+    "rojo": "punane",
+    "azul": "sinine",
+    "verde": "roheline",
+    "amarillo": "kollane"
+  },
+  "numbrid": {
+    "uno": "üks",
+    "dos": "kaks",
+    "tres": "kolm",
+    "cuatro": "neli"
+  }
+}
