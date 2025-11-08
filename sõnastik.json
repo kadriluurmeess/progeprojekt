@@ -1,45 +1,52 @@
 {
-  "tervitused": [
-    {
-      "sõna": "hola",
-      "tõlge": "tere",
-      "selgitus": "Kasutatakse sõbraliku tervitusena igas olukorras, nii ametlikult kui mitte.",
-      "näited": [
-        "Hola, ¿cómo estás? - Tere, kuidas sul läheb?",
-        "Hola a todos. - Tere kõigile.",
-        "Hola, ¿qué tal tu día? - Tere, kuidas su päev läks?"
-      ]
-    },
-    {
-      "sõna": "adios",
-      "tõlge": "head aega",
-      "selgitus": "Kasutatakse lahkumisel. Võib olla nii sõbralik kui neutraalne.",
-      "näited": [
-        "Adiós, hasta mañana. - Head aega, näeme homme.",
-        "Bueno, me voy. ¡Adiós! - Okei, ma lähen. Head aega!",
-        "Adiós a todos, fue un buen día. - Nägemist kõigile, oli hea päev."
-      ]
-    },
-    {
-      "sõna": "gracias",
-      "tõlge": "aitäh",
-      "selgitus": "Viisakas viis tänada iga olukorra puhul.",
-      "näited": [
-        "Gracias por tu ayuda. - Aitäh su abi eest.",
-        "Muchas gracias. - Suur tänu.",
-        "Gracias, de verdad. - Aitäh, tõesti."
-      ]
-    }
-  ],
+    "1": {
+        "tervitused": [
+            {
+                "sõna": "hola",
+                        "tõlge": "tere",
+                        "synonyms": ["hei", "tere!"]
+            },
+            {
+                "sõna": "adios",
+                        "tõlge": "head aega",
+                        "synonyms": ["hüvasti", "nägemist"]
+            }
+        ],
 
-  "värvid": [
-    {
-      "sõna": "rojo",
-      "tõlge": "punane",
-      "selgitus": "Kasutatakse värvi kirjeldamiseks. Võib olla ka emotsionaalne (näiteks armastus või kirg).",
-      "näited": [
-        "La flor es roja. - Lill on punane."
-      ]
+        "viisakus": [
+            {
+                "sõna": "gracias",
+                        "tõlge": "aitäh",
+                        "synonyms": ["tänan"]
+            },
+            {
+                "sõna": "por favor",
+                        "tõlge": "palun",
+                        "synonyms": ["palun väga"]
+            }
+        ],
+
+        "nõusolek": [
+            {
+                "sõna": "sí",
+                        "tõlge": "jah",
+                        "synonyms": ["muidugi"]
+            },
+            {
+                "sõna": "no",
+                        "tõlge": "ei",
+                        "synonyms": ["mitte"]
+            }
+        ]
+    },
+
+    "2": {
+        "värvid": [
+            {
+                "sõna": "rojo",
+                        "tõlge": "punane",
+                        "synonyms": ["veripunane"]
+            }
+        ]
     }
-  ]
 }
