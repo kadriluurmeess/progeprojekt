@@ -138,14 +138,15 @@ def mäng():
         while True:
             punktid, valed = testi_teadmisi(õpitud)
 
-        if punktid == len(õpitud):
-            print(f"\n✅ Tase {tase} sooritatud 100%!")
-            salvesta_tulemus(tase, punktid, len(õpitud))
-            tase += 1
-            input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
-            break
-
-            # Kui oli valesid, õpime ainult neid uuesti
-            print("\n🔁 Õpime uuesti sõnad, mis läksid valesti.\n")
-            salvesta_tulemus(tase, punktid, len(õpitud))
+            if punktid == len(õpitud):
+                print(f"\n✅ Tase {tase} sooritatud 100%!")
+                salvesta_tulemus(tase, punktid, len(õpitud))
+                tase += 1
+                input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
+                break
+            else:
+                # Kui oli valesid, õpime ainult neid uuesti
+                print("\n🔁 Õpime uuesti sõnad, mis läksid valesti.\n")
+                salvesta_tulemus(tase, punktid, len(õpitud))
+                õpitud = valed  # Jätkame ainult valede sõnadega
             õpitud = õpeta_sõnad({"valesti läksid": valed})
