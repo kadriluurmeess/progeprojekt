@@ -1,4 +1,34 @@
 import json, random, os, re, unicodedata, difflib
+from datetime import datetime
+
+def salvesta_tulemus(tase: int, punktid: int, max_punktid: int):
+    """Salvesta mängu tulemus koos ajatempliga JSON faili."""
+    failinimi = "mängutulemused.json"
+    
+    # Loe olemasolevad tulemused või loo tühi list
+    if os.path.exists(failinimi):
+        try:
+            with open(failinimi, "r", encoding="utf-8") as f:
+                tulemused = json.load(f)
+        except json.JSONDecodeError:
+            tulemused = []
+    else:
+        tulemused = []
+    
+    # Lisa uus tulemus
+    uus_tulemus = {
+        "kuupäev": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "tase": tase,
+        "punktid": punktid,
+        "max_punktid": max_punktid,
+        "protsent": round((punktid / max_punktid * 100) if max_punktid > 0 else 0, 1)
+    }
+    
+    tulemused.append(uus_tulemus)
+    
+    # Salvesta tulemused faili
+    with open(failinimi, "w", encoding="utf-8") as f:
+        json.dump(tulemused, f, indent=4, ensure_ascii=False)
 
 def lae_sõnad():
     failinimi = "sõnastik.json"
@@ -104,14 +134,14 @@ def mäng():
         while True:
             punktid, valed = testi_teadmisi(õpitud)
 
-            if punktid == len(õpitud):
-                print(f"\n✅ Tase {tase} sooritatud 100%!")
-                tase += 1
-                input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
-                break
+        if punktid == len(õpitud):
+            print(f"\n✅ Tase {tase} sooritatud 100%!")
+            salvesta_tulemus(tase, punktid, len(õpitud))
+            tase += 1
+            input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
+            break
 
             # Kui oli valesid, õpime ainult neid uuesti
             print("\n🔁 Õpime uuesti sõnad, mis läksid valesti.\n")
+            salvesta_tulemus(tase, punktid, len(õpitud))
             õpitud = õpeta_sõnad({"valesti läksid": valed})
-
-
