@@ -4,38 +4,40 @@
             {
                 "sõna": "hola",
                         "tõlge": "tere",
-                        "synonyms": ["hei", "tere!"]
+                        "hääldus": "OH-la"
             },
             {
                 "sõna": "adios",
-                        "tõlge": "head aega",
-                        "synonyms": ["hüvasti", "nägemist"]
+                "tõlge": "head aega",
+                "hääldus": "ah-dee-OSS"
             }
         ],
 
         "viisakus": [
             {
                 "sõna": "gracias",
-                        "tõlge": "aitäh",
-                        "synonyms": ["tänan"]
+                "tõlge": "aitäh",
+                "synonyms": ["tänan"],
+                "hääldus": "GRAH-si-as"
             },
             {
                 "sõna": "por favor",
-                        "tõlge": "palun",
-                        "synonyms": ["palun väga"]
+                "tõlge": "palun",
+                "hääldus": "por fa-VOR"
             }
         ],
 
         "nõusolek": [
             {
                 "sõna": "sí",
-                        "tõlge": "jah",
-                        "synonyms": ["muidugi"]
+                "tõlge": "jah",
+                "synonyms": ["ja"],
+                "hääldus": "SI"
             },
             {
                 "sõna": "no",
-                        "tõlge": "ei",
-                        "synonyms": ["mitte"]
+                "tõlge": "ei",
+                "hääldus": "NO"
             }
         ]
     },
@@ -44,8 +46,53 @@
         "värvid": [
             {
                 "sõna": "rojo",
-                        "tõlge": "punane",
-                        "synonyms": ["veripunane"]
+                "tõlge": "punane",
+                "hääldus": "RO-ho"
+            },
+            {
+                "sõna": "azul",
+                "tõlge": "sinine",
+                "hääldus": "ah-SUL"
+            },
+            {
+                "sõna": "verde",
+                "tõlge": "roheline",
+                "hääldus": "BEHR-deh"
+            },
+            {
+                "sõna": "amarillo",
+                "tõlge": "kollane",
+                "hääldus": "a-ma-RI-yo"
+            },
+            {
+                "sõna": "negro",
+                "tõlge": "must",
+                "hääldus": "NE-gro"
+            },
+            {
+                "sõna": "blanco",
+                "tõlge": "valge",
+                "hääldus": "BLAHN-ko"
+            },
+            {
+                "sõna": "gris",
+                "tõlge": "hall",
+                "hääldus": "GRIS"
+            },
+            {
+                "sõna": "marrón",
+                "tõlge": "pruun",
+                "hääldus": "mah-RRON"
+            },
+            {
+                "sõna": "morado",
+                "tõlge": "lilla",
+                "hääldus": "mo-RAH-do"
+            },
+            {
+                "sõna": "naranja",
+                "tõlge": "oranž",
+                "hääldus": "nah-RAHN-ha"
             }
         ]
     }

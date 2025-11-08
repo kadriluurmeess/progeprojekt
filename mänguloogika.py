@@ -47,7 +47,11 @@ def õpeta_sõnad(sõnad):
         print(f"\n=== Kategooria: {kategooria.upper()} ===")
 
         for elem in nimekiri:
-            print(f"\n✨ Uus sõna: {elem['sõna']}  →  {elem['tõlge']}")
+            hääldus = elem.get('hääldus', '')  # Get pronunciation if available
+            if hääldus:
+                print(f"\n✨ Uus sõna: {elem['sõna']} [{hääldus}]  →  {elem['tõlge']}")
+            else:
+                print(f"\n✨ Uus sõna: {elem['sõna']}  →  {elem['tõlge']}")
             õpitud.append(elem)
             input("👉 Vajuta Enter, et minna järgmise sõna juurde...")
 
