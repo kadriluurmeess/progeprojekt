@@ -1,48 +1,117 @@
-import json, random, time
+import json, random, os, re, unicodedata, difflib
 
 def lae_sõnad():
-    with open("sõnastik.json", "r", encoding="utf-8") as f:
+    failinimi = "sõnastik.json"
+    if not os.path.exists(failinimi):
+        raise FileNotFoundError(f"Ei leidnud faili: {failinimi}")
+
+    with open(failinimi, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def õpeta_sõnad(sõnad):
-    print("\n📚 Õppimisosa - õpime sõnu ükshaaval!")
-    print("Vajuta Enter, kui oled valmis järgmise sõna juurde liikuma.\n")
+    print("\n📚 Õpime sõnu!\n")
 
     õpitud = []
 
     for kategooria, nimekiri in sõnad.items():
         print(f"\n=== Kategooria: {kategooria.upper()} ===")
+
         for elem in nimekiri:
             print(f"\n✨ Uus sõna: {elem['sõna']}  →  {elem['tõlge']}")
-            print(f"Selgitus: {elem['selgitus']}\n")
-
-            print("Näited kasutamiseks:")
-            for n in elem["näited"]:
-                print(f" • {n}")
-
             õpitud.append(elem)
-            input("\n👉 Vajuta Enter, et minna järgmise sõna juurde...")
+            input("👉 Vajuta Enter, et minna järgmise sõna juurde...")
 
     input("\n🎯 Nüüd testime, mis meelde jäi! Vajuta Enter...\n")
     return õpitud
 
 def testi_teadmisi(õpitud):
-    print("\n🎯 TESTIOSA - proovime, mis meelde jäi!")
+    #print("\n🎯 TESTIOSA - proovime, mis meelde jäi!")
     punktid = 0
+    valed = []
+
+    def normalize(s: str) -> str:
+        if not isinstance(s, str):
+            return ""
+        s = s.lower().strip()
+        # remove diacritics
+        s = unicodedata.normalize('NFKD', s)
+        s = ''.join(ch for ch in s if not unicodedata.combining(ch))
+        # remove punctuation (keep letters, numbers and spaces)
+        s = re.sub(r"[^\w\s]", "", s)
+        # collapse whitespace
+        s = re.sub(r"\s+", " ", s).strip()
+        return s
+
+    def is_correct(user: str, expected: str, synonyms: list[str] | None = None) -> bool:
+        """Return True if user's answer matches expected or any synonym.
+        Uses normalized exact match first, then a fuzzy-match fallback.
+        """
+        if synonyms is None:
+            synonyms = []
+        user_n = normalize(user)
+        if not user_n:
+            return False
+
+        candidates = [normalize(expected)] + [normalize(x) for x in synonyms]
+        # exact normalized match
+        if user_n in candidates:
+            return True
+
+        # fuzzy match using difflib (tolerate small typos)
+        match = difflib.get_close_matches(user_n, candidates, n=1, cutoff=0.78)
+        if match:
+            return True
+
+        # token overlap: if user's answer contains most of expected words
+        exp_tokens = set(normalize(expected).split())
+        user_tokens = set(user_n.split())
+        if exp_tokens and (len(exp_tokens & user_tokens) / max(1, len(exp_tokens)) >= 0.6):
+            return True
+
+        return False
 
     for elem in random.sample(õpitud, len(õpitud)):
-        vastus = input(f"\nMida tähendab '{elem['sõna']}' eesti keeles? ").strip().lower()
-        if vastus == elem["tõlge"]:
+        vastus = input(f"\nMida tähendab '{elem['sõna']}' eesti keeles? ").strip()
+
+        # allow optional synonyms field per word in the dictionary
+        synonyms = elem.get("synonyms") if isinstance(elem, dict) else None
+
+        if is_correct(vastus, elem.get("tõlge", ""), synonyms):
             print("✅ Õige! Tubli!")
             punktid += 1
         else:
-            print(f"❌ Vale. Õige vastus: {elem['tõlge']}")
-            print("💡 Näide:", random.choice(elem["näited"]))
+            print(f"❌ Vale. Õige vastus: {elem.get('tõlge', '')}")
+            valed.append(elem)
 
     print(f"\n🏆 Sinu tulemus: {punktid}/{len(õpitud)} punkti.")
+    return punktid, valed
 
 def mäng():
-    sõnad = lae_sõnad()
-    õpitud_sonad = õpeta_sõnad(sõnad)
-    testi_teadmisi(õpitud_sonad)
-    print("\nAitäh mängimast! Hasta luego! 👋")
+    sõnastik = lae_sõnad()
+    tase = 1
+
+    while True:
+        if str(tase) not in sõnastik:
+            print("\n🎉 Palju õnne! Kõik tasemed on läbitud!")
+            break
+
+        print(f"\n TASE {tase}")
+        taseme_sonad = sõnastik[str(tase)]
+
+        # Esmane õppimine
+        õpitud = õpeta_sõnad(taseme_sonad)
+
+        while True:
+            punktid, valed = testi_teadmisi(õpitud)
+
+            if punktid == len(õpitud):
+                print(f"\n✅ Tase {tase} sooritatud 100%!")
+                tase += 1
+                input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
+                break
+
+            # Kui oli valesid, õpime ainult neid uuesti
+            print("\n🔁 Õpime uuesti sõnad, mis läksid valesti.\n")
+            õpitud = õpeta_sõnad({"valesti läksid": valed})
+
+
