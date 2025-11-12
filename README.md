@@ -12,6 +12,7 @@ milleni võiks edasi areneda-
   graafiline pool:
   - teha ilusaks ja kasutajasõbralikuks
 
+  mängutulemused json programm on ka veel vaja teha
+
 koostöö ja rollid:
-koostöö on sujunud, kuid rolle oleks võibolla paremini saanud jagada, sest siiani me ei andnud otseselt kindlaid ülesandeid üksteisele.
-kui palju aega kulunud? mul 5 h u äkki 12.11 õhtuks kulunud.
+põhiline asi, mis on sujunud on töö. koostöö on sujunud, kuid rolle oleks võibolla paremini saanud jagada, sest siiani me ei andnud otseselt kindlaid ülesandeid üksteisele või ei jaganud ajaliselt ära kui palju mõlemad teevad. seetõttu siiani on tööjaotus olnud veidi ebavõrdne.
