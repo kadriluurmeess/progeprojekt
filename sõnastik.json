@@ -94,6 +94,114 @@
                 "tõlge": "oranž",
                 "hääldus": "nah-RAHN-ha"
             }
+        ],
+        
+        "toidud": [
+            {
+                "sõna": "jamón",
+                "tõlge": "sink (eriti õhukeselt lõigatud kuivatatud sink)",
+                "hääldus": "ha-MON"
+            },
+            {
+                "sõna": "chorizo",
+                "tõlge": "vürtsikas vorst",
+                "hääldus": "cho-REE-tho"
+            },
+            {
+                "sõna": "aceitunas",
+                "tõlge": "oliivid",
+                "hääldus": "a-thay-TOO-nas"
+            },
+            {
+                "sõna": "aceite de oliva",
+                "tõlge": "oliiviõli",
+                "hääldus": "a-THAY-te de o-LEE-va"
+            },
+            {
+                "sõna": "vino tinto",
+                "tõlge": "punane vein",
+                "hääldus": "BEE-no TEEN-to"
+            },
+            {
+                "sõna": "tomate",
+                "tõlge": "tomat",
+                "hääldus": "to-MA-te"
+            },
+            {
+                "sõna": "ajo",
+                "tõlge": "küüslauk",
+                "hääldus": "A-ho"
+            },
+            {
+                "sõna": "cebolla",
+                "tõlge": "sibul",
+                "hääldus": "the-BO-ya"
+            },
+            {
+                "sõna": "huevo",
+                "tõlge": "muna",
+                "hääldus": "WE-bo"
+            },
+            {
+                "sõna": "queso",
+                "tõlge": "juust",
+                "hääldus": "KE-so"
+            },
+            {
+                "sõna": "pan",
+                "tõlge": "leib",
+                "hääldus": "pan"
+            },
+            {
+                "sõna": "pollo",
+                "tõlge": "kana",
+                "hääldus": "PO-yo"
+            },
+            {
+                "sõna": "pescado",
+                "tõlge": "kala",
+                "hääldus": "pes-KA-do"
+            },
+            {
+                "sõna": "marisco",
+                "tõlge": "mereannid",
+                "hääldus": "ma-REES-ko"
+            },
+            {
+                "sõna": "patata",
+                "tõlge": "kartul",
+                "hääldus": "pa-TA-ta"
+            },
+            {
+                "sõna": "sal",
+                "tõlge": "sool",
+                "hääldus": "sal"
+            },
+            {
+                "sõna": "naranja",
+                "tõlge": "apelsin",
+                "hääldus": "na-RAN-ha"
+            },
+            {
+                "sõna": "limón",
+                "tõlge": "sidrun",
+                "hääldus": "lee-MON"
+            },
+            {
+                "sõna": "uva",
+                "tõlge": "viinamari",
+                "hääldus": "OO-va"
+            },
+            {
+                "sõna": "manzana",
+                "tõlge": "õun",
+                "hääldus": "man-THA-na"
+            },
+            {
+                "sõna": "jamón serrano",
+                "tõlge": "kuivatatud mägisink",
+                "hääldus": "ha-MON se-RA-no"
+            }
         ]
     }
 }
