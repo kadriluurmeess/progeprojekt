@@ -1,8 +1,21 @@
+"""
+Sisaldab mängu põhiloogikat: sõnade laadimist, õppimise ja testimise
+vooge, vastuste normaliseerimist ja tulemuste salvestamist JSON-faili (veel ei tööta).
+"""
+
 import json, random, os, re, unicodedata, difflib
 from datetime import datetime
 
 def salvesta_tulemus(tase: int, punktid: int, max_punktid: int):
-    """Salvesta mängu tulemus koos ajatempliga JSON faili."""
+    """
+    Salvesta mängu tulemus JSON-faili.
+
+    Args:
+        tase (int): Käesolev tase, mille skoor salvestatakse.
+        punktid (int): Mängija saavutatud punktid.
+        max_punktid (int): Taseme maksimaalsed punktid.
+
+    """
     failinimi = "mängutulemused.json"
     
     # Loe olemasolevad tulemused või loo tühi list
@@ -31,6 +44,16 @@ def salvesta_tulemus(tase: int, punktid: int, max_punktid: int):
         json.dump(tulemused, f, indent=4, ensure_ascii=False)
 
 def lae_sõnad():
+    """
+    Lae sõnastikuandmed `sõnastik.json` failist.
+
+    Returns:
+        dict: Kaardistus tasemetest ja kategooriatest (str -> dict).
+
+    Raises:
+        FileNotFoundError: Kui faili ei leita.
+        json.JSONDecodeError: Kui faili sisu ei ole korrektne JSON.
+    """
     failinimi = "sõnastik.json"
     if not os.path.exists(failinimi):
         raise FileNotFoundError(f"Ei leidnud faili: {failinimi}")
@@ -39,6 +62,17 @@ def lae_sõnad():
         return json.load(f)
 
 def õpeta_sõnad(sõnad):
+    """
+    Õpetusrežiim: kuvab järjest sõnad ja nende tõlked/hääldused.
+
+    Funktsioon tagastab listi õpitud sõnadest, millest hiljem tehakse test.
+
+    Args:
+        sõnad (dict): Taseme või kategooria sõnade struktuur.
+
+    Returns:
+        list: Sõnade objektide list, mida kasutab testimisfunktsioon.
+    """
     print("\n📚 Õpime sõnu!\n")
 
     õpitud = []
@@ -47,38 +81,59 @@ def õpeta_sõnad(sõnad):
         print(f"\n=== Kategooria: {kategooria.upper()} ===")
 
         for elem in nimekiri:
-            hääldus = elem.get('hääldus', '')  # Get pronunciation if available
+            # Kui sõnal on hääldus, näitame seda õppimise ajal
+            hääldus = elem.get('hääldus', '')
             if hääldus:
                 print(f"\n✨ Uus sõna: {elem['sõna']} [{hääldus}]  →  {elem['tõlge']}")
             else:
                 print(f"\n✨ Uus sõna: {elem['sõna']}  →  {elem['tõlge']}")
             õpitud.append(elem)
+            # Ootame kasutaja kinnitust järgmise sõnani liikumiseks
             input("👉 Vajuta Enter, et minna järgmise sõna juurde...")
 
     input("\n🎯 Nüüd testime, mis meelde jäi! Vajuta Enter...\n")
     return õpitud
 
 def testi_teadmisi(õpitud):
+    """
+    Testi: küsib kasutajalt õpitud sõnade tõlkeid ning hindab vastuseid.
+
+    Args:
+        õpitud (list): List sõnadest, mille põhjal test toimub.
+
+    Returns:
+        tuple: (punktid, valed), kus `punktid` on õigete vastuste arv ja `valed`
+               on list sõnadest, mille vastused olid valed.
+    """
     #print("\n🎯 TESTIOSA - proovime, mis meelde jäi!")
     punktid = 0
     valed = []
 
     def normalize(s: str) -> str:
+        """
+        Puhasta tekst vastuste võrdlemiseks.
+
+        Eemaldab diakriitilised märgid, madaldab tähed, eemaldab kirjavahemärgid
+        ning tühistab mitmikvahed. 
+        """
         if not isinstance(s, str):
             return ""
         s = s.lower().strip()
-        # remove diacritics
+        # Eemalda diakriitikad (näiteks õ, ä, ñ) võrdlust lihtsustamaks
         s = unicodedata.normalize('NFKD', s)
         s = ''.join(ch for ch in s if not unicodedata.combining(ch))
-        # remove punctuation (keep letters, numbers and spaces)
+        # Eemalda kirjavahemärgid, jäta ainult tähed, numbrid ja tühikud
         s = re.sub(r"[^\w\s]", "", s)
-        # collapse whitespace
+        # Ühenda järjest tühikud üheks
         s = re.sub(r"\s+", " ", s).strip()
         return s
 
     def is_correct(user: str, expected: str, synonyms: list[str] | None = None) -> bool:
-        """Return True if user's answer matches expected or any synonym.
-        Uses normalized exact match first, then a fuzzy-match fallback.
+        """
+        Kontrolli, kas kasutaja vastus on õige.
+
+        Esiteks tehakse normaliseeritud täpne võrdlus ootuse või sünonüümidega.
+        Kui täpne vaste puudub, lubatakse väikesed trükivead või vormistuslikud erinevused.
         """
         if synonyms is None:
             synonyms = []
@@ -104,10 +159,11 @@ def testi_teadmisi(õpitud):
 
         return False
 
+    # Testi sõnad suvalises järjekorras
     for elem in random.sample(õpitud, len(õpitud)):
         vastus = input(f"\nMida tähendab '{elem['sõna']}' eesti keeles? ").strip()
 
-        # allow optional synonyms field per word in the dictionary
+        # Sõnastikus võib olla valikuline 'synonyms' väli — kasuta seda, kui olemas
         synonyms = elem.get("synonyms") if isinstance(elem, dict) else None
 
         if is_correct(vastus, elem.get("tõlge", ""), synonyms):
@@ -121,10 +177,20 @@ def testi_teadmisi(õpitud):
     return punktid, valed
 
 def mäng():
+    """
+    Mängu põhifunktsioon, mis juhib tasemete ja õppimise/testimise tsüklit.
+
+    Loogika:
+    - Laeb sõnastiku failist
+    - Iga taseme jaoks näitab esmalt õppimisrežiimi (kõik sõnad)
+    - Küsib testi; kui punktid on maksimaalsed, liigub järgmisele tasemele
+    - Kui on valesid vastuseid, siis jätkatakse ainult valede sõnade õppimisega kuni õnnestumiseni
+    """
     sõnastik = lae_sõnad()
     tase = 1
 
     while True:
+        # Kui järgmine tase puudub, oleme lõpetanud
         if str(tase) not in sõnastik:
             print("\n🎉 Palju õnne! Kõik tasemed on läbitud!")
             break
@@ -132,21 +198,23 @@ def mäng():
         print(f"\n TASE {tase}")
         taseme_sonad = sõnastik[str(tase)]
 
-        # Esmane õppimine
+        # Esmane õppimine: läbime kõik taseme sõnad
         õpitud = õpeta_sõnad(taseme_sonad)
 
         while True:
             punktid, valed = testi_teadmisi(õpitud)
 
             if punktid == len(õpitud):
-                print(f"\n✅ Tase {tase} sooritatud 100%!")
+                # Kui kõik õiged, salvestame tulemuse ja liigutakse edasi
+                print(f"\n✅ Tase {tase} sooritatud 100%!" )
                 salvesta_tulemus(tase, punktid, len(õpitud))
                 tase += 1
                 input(f"👉 Vajuta Enter, et liikuda tasemele {tase}...\n")
                 break
             else:
-                # Kui oli valesid, õpime ainult neid uuesti
+                # Õpime uuesti ainult need, mis läksid valesti
                 print("\n🔁 Õpime uuesti sõnad, mis läksid valesti.\n")
                 salvesta_tulemus(tase, punktid, len(õpitud))
                 õpitud = valed  # Jätkame ainult valede sõnadega
+            # Õpperežiim uuesti valede sõnadega
             õpitud = õpeta_sõnad({"valesti läksid": valed})
