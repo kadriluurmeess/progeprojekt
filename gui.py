@@ -90,15 +90,14 @@ class SonaMangGUI:
             return
 
         # Võtame suvalise sõna (võti) ja selle tõlke (väärtus)
-        # NB: Sõltub sinu JSONi struktuurist. Siin eeldame: "Eesti": "Inglise"
         self.praegune_sona = random.choice(list(self.sonastik.keys()))
         self.oige_vastus = self.sonastik[self.praegune_sona]
         
-        # Uuendame kasutajaliidest
+        # UI uuendamine
         self.kusimus_silt.config(text=f"Tõlgi sõna: {self.praegune_sona}")
-        self.sisestus.delete(0, tk.END) # Tühjendame sisestusvälja
+        self.sisestus.delete(0, tk.END) # Sisestusvälja tühjendamine
         self.tagasiside_silt.config(text="")
-        self.sisestus.focus() # Paneme kursor kasti
+        self.sisestus.focus() # Kursori lisamine
 
     def kontrolli_vastust(self):
         """Kontrollib, kas sisestatud vastus on õige"""
@@ -107,7 +106,7 @@ class SonaMangGUI:
 
         kasutaja_vastus = self.sisestus.get().strip()
 
-        # Kontrollime (tõstutundetu)
+        # Kontrollimine
         if kasutaja_vastus.lower() == self.oige_vastus.lower():
             self.skoor += 1
             self.tagasiside_silt.config(text="Õige! Tubli töö.", fg="green")
@@ -136,7 +135,7 @@ class SonaMangGUI:
     def salvesta_tulemus(self):
         """Salvestab tulemuse faili mängutulemused.json"""
         tulemus = {
-            "mängija_nimi": "Mängija", # Hiljem võid lisada nime küsimise
+            "mängija_nimi": "Mängija",
             "skoor": self.skoor,
             "voit": False, # Lihtne loogika
             "kuupaev": datetime.now().strftime("%Y-%m-%d"),
