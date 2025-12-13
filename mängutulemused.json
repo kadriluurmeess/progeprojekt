@@ -54,5 +54,47 @@
         "punktid": 10,
         "max_punktid": 10,
         "protsent": 100.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:09:44",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:09:46",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:09:46",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:09:47",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:10:03",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-13 10:10:07",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 6,
+        "protsent": 0.0
     }
 ]
