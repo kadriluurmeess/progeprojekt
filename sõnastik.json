@@ -39,6 +39,35 @@
                 "tõlge": "ei",
                 "hääldus": "NO"
             }
+        ],
+
+        "küsimused": [
+            {
+                "sõna": "¿Cómo está?",
+                "tõlge": "Kuidas läheb?",
+                "hääldus": "KOH-mo es-TAH"
+            },
+            {
+                "sõna": "¿Qué tal?",
+                "tõlge": "Mis teed?",
+                "synonyms": ["kuidas läheb"],
+                "hääldus": "keh TAHL"
+            },
+            {
+                "sõna": "¿Quién es?",
+                "tõlge": "Kes see on?",
+                "hääldus": "KEE-en es"
+            },
+            {
+                "sõna": "¿Qué hora es?",
+                "tõlge": "Mis kell on?",
+                "hääldus": "keh OH-ra es"
+            },
+            {
+                "sõna": "¿Dónde está?",
+                "tõlge": "Kus see asub?",
+                "hääldus": "DON-de es-TAH"
+            }
         ]
     },
 
@@ -99,7 +128,7 @@
         "toidud": [
             {
                 "sõna": "jamón",
-                "tõlge": "sink (eriti õhukeselt lõigatud kuivatatud sink)",
+                "tõlge": "sink",
                 "hääldus": "ha-MON"
             },
             {
@@ -198,5 +227,166 @@
                 "hääldus": "man-THA-na"
             }
         ]
+    },
+
+    "3": {
+        "numbrid": [
+            {
+                "sõna": "cero",
+                "tõlge": "null",
+                "hääldus": "THE-ro"
+            },
+            {
+                "sõna": "uno",
+                "tõlge": "üks",
+                "hääldus": "OO-no"
+            },
+            {
+                "sõna": "dos",
+                "tõlge": "kaks",
+                "hääldus": "dos"
+            },
+            {
+                "sõna": "tres",
+                "tõlge": "kolm",
+                "hääldus": "tres"
+            },
+            {
+                "sõna": "cuatro",
+                "tõlge": "neli",
+                "hääldus": "KWA-tro"
+            },
+            {
+                "sõna": "cinco",
+                "tõlge": "viis",
+                "hääldus": "THIN-ko"
+            },
+            {
+                "sõna": "seis",
+                "tõlge": "kuus",
+                "hääldus": "SEIS"
+            },
+            {
+                "sõna": "siete",
+                "tõlge": "seitse",
+                "hääldus": "SYE-te"
+            },
+            {
+                "sõna": "ocho",
+                "tõlge": "kaheksa",
+                "hääldus": "O-cho"
+            },
+            {
+                "sõna": "nueve",
+                "tõlge": "üheksa",
+                "hääldus": "NWE-ve"
+            },
+            {
+                "sõna": "diez",
+                "tõlge": "kümme",
+                "hääldus": "dee-ETH"
+            }
+        ],
+        
+        "perekonnaliikmed": [
+            {
+                "sõna": "madre",
+                "tõlge": "ema",
+                "hääldus": "MA-dre"
+            },
+            {
+                "sõna": "padre",
+                "tõlge": "isa",
+                "hääldus": "PA-dre"
+            },
+            {
+                "sõna": "hermano",
+                "tõlge": "vend",
+                "hääldus": "er-MA-no"
+            },
+            {
+                "sõna": "hermana",
+                "tõlge": "õde",
+                "hääldus": "er-MA-na"
+            },
+            {
+                "sõna": "hijo",
+                "tõlge": "poeg",
+                "hääldus": "EE-ho"
+            },
+            {
+                "sõna": "hija",
+                "tõlge": "tütar",
+                "hääldus": "EE-ha"
+            },
+            {
+                "sõna": "abuelo",
+                "tõlge": "vanaisa",
+                "hääldus": "a-BWE-lo"
+            },
+            {
+                "sõna": "abuela",
+                "tõlge": "vanaema",
+                "hääldus": "a-BWE-la"
+            }
+        ]
+    },
+
+    "4": {
+        "igapäevased_tegevused": [
+            {
+                "sõna": "despertarse",
+                "tõlge": "ärka üles",
+                "hääldus": "des-per-TAR-se"
+            },
+            {
+                "sõna": "levantarse",
+                "tõlge": "tõuse üles",
+                "hääldus": "le-ban-TAR-se"
+            },
+            {
+                "sõna": "comer",
+                "tõlge": "sööma",
+                "synonyms": ["söön"],
+                "hääldus": "ko-MER"
+            },
+            {
+                "sõna": "beber",
+                "tõlge": "jooma",
+                "hääldus": "be-BER"
+            },
+            {
+                "sõna": "trabajar",
+                "tõlge": "töötama",
+                "hääldus": "tra-ba-HAR"
+            },
+            {
+                "sõna": "estudiar",
+                "tõlge": "õppima",
+                "hääldus": "es-tu-DYAR"
+            },
+            {
+                "sõna": "hablar",
+                "tõlge": "rääkima",
+                "hääldus": "a-BLAR"
+            },
+            {
+                "sõna": "escuchar",
+                "tõlge": "kuulama",
+                "hääldus": "es-ku-CHAR"
+            },
+            {
+                "sõna": "ver",
+                "tõlge": "nägema",
+                "hääldus": "ber"
+            },
+            {
+                "sõna": "ir a dormir",
+                "tõlge": "magama minema",
+                "hääldus": "eer a dor-MIR"
+            }
+        ]
     }
 }
+
+
