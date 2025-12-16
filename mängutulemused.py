@@ -1,7 +1,3 @@
-import json
-import os
-from datetime import datetime
-
 TULEMUSED = [
     {
         "kuupäev": "2025-12-13 09:51:29",
@@ -107,8 +103,27 @@ TULEMUSED = [
         "punktid": 1,
         "max_punktid": 2,
         "protsent": 50.0
+    },
+    {
+        "kuupäev": "2025-12-16 20:08:17",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 22,
+        "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-16 20:08:18",
+        "tase": 1,
+        "punktid": 0,
+        "max_punktid": 22,
+        "protsent": 0.0
     }
 ]
+
+
+import json
+import os
+from datetime import datetime
 
 
 def _save_results_to_module():

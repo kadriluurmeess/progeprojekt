@@ -29,7 +29,7 @@ except Exception:
 class SonaMangGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("🇪🇸 Hispaania keele õppemäng")
+        self.root.title("Hispaania keele õppemäng")
         self.root.geometry("600x500")
         
         # Mängu muutujad

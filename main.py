@@ -5,16 +5,14 @@ Allikad:
 Kirjeldus: Lihtne sõnavara õppimise mäng.
 """
 
-
-from mänguloogika import mäng
+import tkinter as tk
+from gui import SonaMangGUI
 
 def main():
-    """
-    Kuvab lühikese tervituse ja käivitab `mäng()` funktsiooni mänguloogikast.
-    """
-    print("🇪🇸 Tere tulemast Hispaania keele õppemängu!")
-    print("Tõlgi hispaania keelsed sõnad eesti keelde ja vastupidi.")
-    mäng()
+    """Käivita graafiline kasutajaliides."""
+    root = tk.Tk()
+    app = SonaMangGUI(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
