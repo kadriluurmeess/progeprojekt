@@ -1,3 +1,7 @@
+import json
+import os
+from datetime import datetime
+
 TULEMUSED = [
     {
         "kuupäev": "2025-12-13 09:51:29",
@@ -105,3 +109,33 @@ TULEMUSED = [
         "protsent": 50.0
     }
 ]
+
+
+def _save_results_to_module():
+    """Kirjuta TULEMUSED tagasi sellesse moodulifaili."""
+    path = os.path.abspath(__file__)
+    content = "TULEMUSED = " + json.dumps(TULEMUSED, indent=4, ensure_ascii=False) + "\n"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+def get_results():
+    """Tagasta tulemuste koopia."""
+    return list(TULEMUSED)
+
+
+def add_result(tase: int, punktid: int, max_punktid: int, kuupäev: str | None = None):
+    """Lisa uus tulemus ja salvesta failina."""
+    if kuupäev is None:
+        kuupäev = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    protsent = round((punktid / max_punktid * 100) if max_punktid > 0 else 0.0, 1)
+
+    TULEMUSED.append({
+        "kuupäev": kuupäev,
+        "tase": tase,
+        "punktid": punktid,
+        "max_punktid": max_punktid,
+        "protsent": protsent
+    })
+
+    _save_results_to_module()
