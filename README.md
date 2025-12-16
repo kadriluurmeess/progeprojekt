@@ -6,13 +6,14 @@
 
 ## 📝 Projekti kirjeldus
 
-Interaktiivne konsoolimäng hispaania keele sõnavara õppimiseks ja harjutamiseks. Programm pakub erinevaid raskusastmeid ja kahepoolset tõlkimist (ESP↔EST).
+Interaktiivne konsoolimäng hispaania keele sõnavara õppimiseks ja harjutamiseks. Programm pakub erinevaid raskusastmeid, kahepoolset tõlkimist (ESP↔EST) ja häälduse õppimise võimalust.
 
 ## ✨ Funktsioonid
 
 ### Põhifunktsioonid
 - ✅ **Tasemepõhine õppimine** - sõnavara on jagatud kategooriatesse ja tasemetesse
 - ✅ **Kahepoolne tõlkimine** - mäng testib nii ESP→EST kui EST→ESP suunas
+- ✅ **Häälduse tugi (TTS)** - õppimisfaasis saad kuulata hispaania keele hääldust (nõuab `pyttsx3`)
 - ✅ **Sünonüümide tugi** - aktsepteerib erinevaid õigeid vastuseid
 - ✅ **Vastuste normaliseerimine** - lubab väikeseid trükivigu ja erineval kirjutamist
 - ✅ **Tulemuste salvestamine** - kõik tulemused salvestatakse JSON-faili
@@ -31,6 +32,10 @@ python main.py
 python tulemuste_vaataja.py
 ```
 
+### TTS (Text-to-Speech) installimine (valikuline)
+```powershell
+pip install pyttsx3
+```
 
 ## 📁 Projektstruktuur
 
@@ -38,6 +43,7 @@ python tulemuste_vaataja.py
 progeprojekt/
 ├── main.py                  # Põhiprogramm (käivituspunkt)
 ├── mänguloogika.py          # Mängumootorloogika
+├── hääl.py                  # Text-to-speech moodul
 ├── tulemuste_vaataja.py     # Tulemuste analüsaator
 ├── sõnastik.json            # Sõnavara andmebaas
 ├── mängutulemused.json      # Salvestatud tulemused
@@ -46,7 +52,9 @@ progeprojekt/
 
 ## 🎮 Kuidas mängida
 
-1. **Õppimisfaas**: programm näitab sulle sõnu ja tõlkeid
+1. **Õppimisfaas**: programm näitab sulle sõnu, nende hääldust ja tõlkeid
+   - Sisesta `h` kui soovid kuulada hääldust (TTS vajalik)
+   - Vajuta Enter järgmise sõna juurde liikumiseks
 
 2. **Test 1 (ESP→EST)**: tõlgi hispaania keelsed sõnad eesti keelde
 
@@ -72,6 +80,7 @@ Tulemuste analüsaatori funktsioonid:
 - `unicodedata` ja `re` - tekstinormaliseerimine
 - `difflib` - hägusa vastusevastavuse kontroll
 - `datetime` - tulemuste ajatemplid
+- `pyttsx3` (valikuline) - text-to-speech
 
 ### Andmestruktuur (sõnastik.json)
 ```json
@@ -81,7 +90,8 @@ Tulemuste analüsaatori funktsioonid:
       {
         "sõna": "hola",
         "tõlge": "tere",
-        "synonyms": ["hei", "tere!"]
+        "synonyms": ["hei", "tere!"],
+        "hääldus": "OH-la"
       }
     ]
   }
@@ -94,6 +104,7 @@ Tulemuste analüsaatori funktsioonid:
 - [ ] Graafiline kasutajaliides (tkinter)
 - [ ] Rohkem tasemeid ja sõnu
 - [ ] Graafikud ja visuaalsed statistikad
+- [ ] Kõnesüntees paremate häältega (gTTS + võrguühendus)
 
 ## 🤝 Koostöö ja rollid
 
