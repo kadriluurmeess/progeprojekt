@@ -286,9 +286,3 @@ class SonaMangGUI:
             messagebox.showerror("Viga", "Tulemuste salvestus pole saadaval")
             return
         add_result(self.tase, self.skoor, self.max_punktid)
-
-# --- Programmi käivitamine ---
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = SonaMangGUI(root)
-    root.mainloop()
