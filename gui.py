@@ -11,13 +11,20 @@ Autorid: Kadri Luurmees, Oskar Martsoo
 
 import tkinter as tk
 from tkinter import messagebox, ttk
-import json
 import random
 import os
 import re
 import unicodedata
 import difflib
 from datetime import datetime
+try:
+    from sõnastik import SONASTIK
+except Exception:
+    SONASTIK = None
+try:
+    from mängutulemused import add_result
+except Exception:
+    add_result = None
 
 class SonaMangGUI:
     def __init__(self, root):
@@ -42,16 +49,12 @@ class SonaMangGUI:
         self.loo_ui()
         
     def lae_sonastik(self):
-        """Lae sõnastik failist."""
-        failinimi = "sõnastik.py"
-        if os.path.exists(failinimi):
-            try:
-                with open(failinimi, "r", encoding="utf-8") as f:
-                    self.sonastik = json.load(f)
-            except Exception as e:
-                messagebox.showerror("Viga", f"Viga faili lugemisel: {e}")
+        """Lae sõnastik moodulist."""
+        if SONASTIK is None:
+            messagebox.showerror("Viga", "sõnastik.SONASTIK ei ole saadaval!")
+            self.sonastik = {}
         else:
-            messagebox.showerror("Viga", "sõnastik.py ei leitud!")
+            self.sonastik = SONASTIK
             
     def loo_ui(self):
         """Loo põhiline kasutajaliides."""
@@ -278,29 +281,11 @@ class SonaMangGUI:
         self.naita_menu()
         
     def salvesta_tulemus(self):
-        """Salvesta tulemus JSON-faili."""
-        tulemus = {
-            "kuupäev": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "tase": self.tase,
-            "punktid": self.skoor,
-            "max_punktid": self.max_punktid,
-            "protsent": round((self.skoor / self.max_punktid * 100) if self.max_punktid > 0 else 0, 1)
-        }
-        
-        failinimi = "mängutulemused.py"
-        tulemused = []
-        
-        if os.path.exists(failinimi):
-            try:
-                with open(failinimi, "r", encoding="utf-8") as f:
-                    tulemused = json.load(f)
-            except:
-                pass
-                
-        tulemused.append(tulemus)
-        
-        with open(failinimi, "w", encoding="utf-8") as f:
-            json.dump(tulemused, f, indent=4, ensure_ascii=False)
+        """Salvesta tulemus moodulisse `mängutulemused`."""
+        if add_result is None:
+            messagebox.showerror("Viga", "Tulemuste salvestus pole saadaval")
+            return
+        add_result(self.tase, self.skoor, self.max_punktid)
 
 # --- Programmi käivitamine ---
 if __name__ == "__main__":

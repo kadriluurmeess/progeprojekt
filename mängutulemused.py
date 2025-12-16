@@ -1,4 +1,4 @@
-[
+TULEMUSED = [
     {
         "kuupäev": "2025-12-13 09:51:29",
         "tase": 1,
@@ -96,5 +96,12 @@
         "punktid": 0,
         "max_punktid": 6,
         "protsent": 0.0
+    },
+    {
+        "kuupäev": "2025-12-16 19:44:39",
+        "tase": 99,
+        "punktid": 1,
+        "max_punktid": 2,
+        "protsent": 50.0
     }
 ]

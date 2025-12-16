@@ -1,65 +1,30 @@
 """
 Sisaldab mängu põhiloogikat: sõnade laadimist, õppimise ja testimise
-vooge, vastuste normaliseerimist ja tulemuste salvestamist JSON-faili (veel ei tööta).
+vooge, vastuste normaliseerimist ja tulemuste salvestamist moodulisse.
 """
 
-import json, random, os, re, unicodedata, difflib
+import random, os, re, unicodedata, difflib
 from datetime import datetime
+try:
+    from sõnastik import SONASTIK
+except Exception:
+    SONASTIK = None
+try:
+    from mängutulemused import add_result
+except Exception:
+    add_result = None
 
 def salvesta_tulemus(tase: int, punktid: int, max_punktid: int):
-    """
-    Salvesta mängu tulemus JSON-faili.
-
-    Args:
-        tase (int): Käesolev tase, mille skoor salvestatakse.
-        punktid (int): Mängija saavutatud punktid.
-        max_punktid (int): Taseme maksimaalsed punktid.
-
-    """
-    failinimi = "mängutulemused.json"
-    
-    # Loe olemasolevad tulemused või loo tühi list
-    if os.path.exists(failinimi):
-        try:
-            with open(failinimi, "r", encoding="utf-8") as f:
-                tulemused = json.load(f)
-        except json.JSONDecodeError:
-            tulemused = []
-    else:
-        tulemused = []
-    
-    # Lisa uus tulemus
-    uus_tulemus = {
-        "kuupäev": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "tase": tase,
-        "punktid": punktid,
-        "max_punktid": max_punktid,
-        "protsent": round((punktid / max_punktid * 100) if max_punktid > 0 else 0, 1)
-    }
-    
-    tulemused.append(uus_tulemus)
-    
-    # Salvesta tulemused faili
-    with open(failinimi, "w", encoding="utf-8") as f:
-        json.dump(tulemused, f, indent=4, ensure_ascii=False)
+    """Salvesta mängu tulemus mängutulemused-moodulisse."""
+    if add_result is None:
+        raise RuntimeError("'mängutulemused.add_result' ei ole saadaval")
+    add_result(tase, punktid, max_punktid)
 
 def lae_sõnad():
-    """
-    Lae sõnastikuandmed `sõnastik.json` failist.
-
-    Returns:
-        dict: Kaardistus tasemetest ja kategooriatest (str -> dict).
-
-    Raises:
-        FileNotFoundError: Kui faili ei leita.
-        json.JSONDecodeError: Kui faili sisu ei ole korrektne JSON.
-    """
-    failinimi = "sõnastik.json"
-    if not os.path.exists(failinimi):
-        raise FileNotFoundError(f"Ei leidnud faili: {failinimi}")
-
-    with open(failinimi, "r", encoding="utf-8") as f:
-        return json.load(f)
+    """Tagasta sõnastik moodulist `sõnastik.SONASTIK`."""
+    if SONASTIK is None:
+        raise RuntimeError("'sõnastik.SONASTIK' ei ole saadaval")
+    return SONASTIK
 
 def õpeta_sõnad(sõnad):
     """

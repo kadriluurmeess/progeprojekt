@@ -1,4 +1,4 @@
-{
+SONASTIK = {
     "1": {
         "tervitused": [
             {
