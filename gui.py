@@ -43,7 +43,7 @@ class SonaMangGUI:
         
     def lae_sonastik(self):
         """Lae sõnastik failist."""
-        failinimi = "sõnastik.json"
+        failinimi = "sõnastik.py"
         if os.path.exists(failinimi):
             try:
                 with open(failinimi, "r", encoding="utf-8") as f:
@@ -51,7 +51,7 @@ class SonaMangGUI:
             except Exception as e:
                 messagebox.showerror("Viga", f"Viga faili lugemisel: {e}")
         else:
-            messagebox.showerror("Viga", "sõnastik.json ei leitud!")
+            messagebox.showerror("Viga", "sõnastik.py ei leitud!")
             
     def loo_ui(self):
         """Loo põhiline kasutajaliides."""
@@ -287,7 +287,7 @@ class SonaMangGUI:
             "protsent": round((self.skoor / self.max_punktid * 100) if self.max_punktid > 0 else 0, 1)
         }
         
-        failinimi = "mängutulemused.json"
+        failinimi = "mängutulemused.py"
         tulemused = []
         
         if os.path.exists(failinimi):
