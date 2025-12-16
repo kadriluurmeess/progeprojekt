@@ -1,13 +1,4 @@
-"""
-gui.py - Graafiline kasutajaliides hispaania õppemängule
-
-Sisaldab tasemepõhise õppimise ja testimise:
-- Esmalt õppimisrežiim (näitab sõnu)
-- Seejärel testimine
-- Tasemete süsteem
-
-Autorid: Kadri Luurmees, Oskar Martsoo
-"""
+# Importimised:
 
 import tkinter as tk
 from tkinter import messagebox, ttk
@@ -18,46 +9,49 @@ import unicodedata
 import difflib
 from datetime import datetime
 try:
-    from sõnastik import SONASTIK
+    from sõnastik import SÕNASTIK
 except Exception:
-    SONASTIK = None
+    SÕNASTIK = None
 try:
     from mängutulemused import add_result
 except Exception:
     add_result = None
 
-class SonaMangGUI:
+
+# GUI klass:
+
+class SõnaMängGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Hispaania keele õppemäng")
         self.root.geometry("600x500")
         
-        # Mängu muutujad
+        # GUI klassi isendimuutujad:
         self.tase = 1
-        self.sonastik = {}
-        self.oppimise_sonad = []
-        self.testi_sonad = []
+        self.sõnastik = {}
+        self.õppimise_sõnad = []
+        self.testi_sõnad = []
         self.praegune_index = 0
         self.skoor = 0
         self.max_punktid = 0
-        self.olek = "menu"  # menu, oppimise, test
+        self.olek = "menu"
         
-        # Laeme andmed
-        self.lae_sonastik()
+        # Andmete laadimine:
+        self.lae_sõnastik()
         
-        # Loo UI
+        # UI loomine:
         self.loo_ui()
         
-    def lae_sonastik(self):
-        """Lae sõnastik moodulist."""
-        if SONASTIK is None:
-            messagebox.showerror("Viga", "sõnastik.SONASTIK ei ole saadaval!")
-            self.sonastik = {}
+    def lae_sõnastik(self):
+        """Sõnastiku laadimine moodulist"""
+        if SÕNASTIK is None:
+            messagebox.showerror("Viga", "sõnastik.SÕNASTIK ei ole saadaval!")
+            self.sõnastik = {}
         else:
-            self.sonastik = SONASTIK
+            self.sõnastik = SÕNASTIK
             
     def loo_ui(self):
-        """Loo põhiline kasutajaliides."""
+        """UI loomine"""
         # Päis
         self.paiseframe = tk.Frame(self.root, bg="#2563eb", height=60)
         self.paiseframe.pack(fill="x")
@@ -66,19 +60,19 @@ class SonaMangGUI:
         tk.Label(self.paiseframe, text="🇪🇸 Hispaania keele õppemäng", 
                 font=("Arial", 18, "bold"), bg="#2563eb", fg="white").pack(pady=15)
         
-        # Põhisisu konteiner
+        # Põhisisu kast
         self.sisu_frame = tk.Frame(self.root, bg="white")
         self.sisu_frame.pack(fill="both", expand=True, padx=20, pady=20)
         
-        self.naita_menu()
+        self.näita_menüüd()
         
     def puhasta_sisu(self):
-        """Eemalda kõik vidinad sisu_frame'ist."""
+        """Puhastab sisu"""
         for widget in self.sisu_frame.winfo_children():
             widget.destroy()
             
-    def naita_menu(self):
-        """Näita peamenüüd."""
+    def näita_menüüd(self):
+        """Näitab peamenüüd"""
         self.puhasta_sisu()
         self.olek = "menu"
         
@@ -88,62 +82,62 @@ class SonaMangGUI:
         tk.Label(self.sisu_frame, text="Õpi hispaania keelt tasemete kaupa", 
                 font=("Arial", 12), bg="white", fg="gray").pack(pady=10)
         
-        # Taseme valik
+        # Taseme valimine
         tk.Label(self.sisu_frame, text=f"Praegune tase: {self.tase}", 
                 font=("Arial", 14, "bold"), bg="white").pack(pady=20)
         
-        # Alusta nupp
+        # "Alusta" nupp
         tk.Button(self.sisu_frame, text="📚 Alusta õppimist", 
                  font=("Arial", 14), bg="#10b981", fg="white",
-                 command=self.alusta_oppimist, width=20, height=2).pack(pady=10)
+                 command=self.alusta_õppimist, width=20, height=2).pack(pady=10)
                  
-    def alusta_oppimist(self):
-        """Alusta õppimisrežiimi praegusel tasemel."""
-        taseme_andmed = self.sonastik.get(str(self.tase), {})
+    def alusta_õppimist(self):
+        """Õppima hakkamine"""
+        taseme_andmed = self.sõnastik.get(str(self.tase), {})
         
         if not taseme_andmed:
             messagebox.showinfo("Info", f"Tase {self.tase} puudub!")
             return
             
         # Kogu kõik sõnad sellelt tasemelt
-        self.oppimise_sonad = []
-        for kategooria, sonade_list in taseme_andmed.items():
-            for sona_obj in sonade_list:
-                sona_obj['_kategooria'] = kategooria
-                self.oppimise_sonad.append(sona_obj)
+        self.õppimise_sõnad = []
+        for kategooria, sõnade_list in taseme_andmed.items():
+            for sõna_obj in sõnade_list:
+                sõna_obj['_kategooria'] = kategooria
+                self.õppimise_sõnad.append(sõna_obj)
                 
         self.praegune_index = 0
-        self.olek = "oppimise"
-        self.naita_oppimise_kaart()
+        self.olek = "õppimise"
+        self.näita_õppimise_kaarti()
         
-    def naita_oppimise_kaart(self):
-        """Näita õppimise kaarti (sõna ja tõlge)."""
+    def näita_õppimise_kaarti(self):
+        """Näita õppimise kaarti (sõna ja tõlge)"""
         self.puhasta_sisu()
         
-        if self.praegune_index >= len(self.oppimise_sonad):
-            # Õppimine läbi, mine testimisse
+        if self.praegune_index >= len(self.õppimise_sõnad):
+            # Õppimine läbi, mine testima
             self.alusta_testi()
             return
             
-        sona = self.oppimise_sonad[self.praegune_index]
+        sõna = self.õppimise_sõnad[self.praegune_index]
         
         tk.Label(self.sisu_frame, text=f"📚 ÕPPIMINE - Tase {self.tase}", 
                 font=("Arial", 14, "bold"), bg="white").pack(pady=10)
                 
-        tk.Label(self.sisu_frame, text=f"Sõna {self.praegune_index + 1} / {len(self.oppimise_sonad)}", 
+        tk.Label(self.sisu_frame, text=f"Sõna {self.praegune_index + 1} / {len(self.õppimise_sõnad)}", 
                 font=("Arial", 10), bg="white", fg="gray").pack()
                 
         # Kategooria
-        tk.Label(self.sisu_frame, text=f"📂 {sona.get('_kategooria', '').upper()}", 
+        tk.Label(self.sisu_frame, text=f"📂 {sõna.get('_kategooria', '').upper()}", 
                 font=("Arial", 11), bg="white", fg="#8b5cf6").pack(pady=10)
         
         # Hispaania sõna
-        tk.Label(self.sisu_frame, text=sona.get('sõna', ''), 
+        tk.Label(self.sisu_frame, text=sõna.get('sõna', ''), 
                 font=("Arial", 28, "bold"), bg="white", fg="#2563eb").pack(pady=20)
                 
-        # Tõlge
+        # Eestikeelne tõlge
         tk.Label(self.sisu_frame, text="→", font=("Arial", 18), bg="white").pack()
-        tk.Label(self.sisu_frame, text=sona.get('tõlge', ''), 
+        tk.Label(self.sisu_frame, text=sõna.get('tõlge', ''), 
                 font=("Arial", 24, "bold"), bg="white", fg="#10b981").pack(pady=20)
         
         # Nupud
@@ -151,56 +145,56 @@ class SonaMangGUI:
         nupu_frame.pack(pady=30)
         
         if self.praegune_index > 0:
-            tk.Button(nupu_frame, text="← Eelmine", command=self.eelmine_oppimise_sona,
+            tk.Button(nupu_frame, text="← Eelmine", command=self.eelmine_õppimise_sõna,
                      font=("Arial", 11)).grid(row=0, column=0, padx=10)
         
-        jargmise_tekst = "Järgmine →" if self.praegune_index < len(self.oppimise_sonad) - 1 else "Alusta testi ✓"
-        tk.Button(nupu_frame, text=jargmise_tekst, command=self.jargmine_oppimise_sona,
+        järgmise_tekst = "Järgmine →" if self.praegune_index < len(self.õppimise_sõnad) - 1 else "Alusta testi ✓"
+        tk.Button(nupu_frame, text=järgmise_tekst, command=self.järgmine_õppimise_sõna,
                  font=("Arial", 11), bg="#10b981", fg="white").grid(row=0, column=1, padx=10)
                  
-    def eelmine_oppimise_sona(self):
+    def eelmine_õppimise_sõna(self):
         """Mine eelmise sõna juurde."""
         if self.praegune_index > 0:
             self.praegune_index -= 1
-            self.naita_oppimise_kaart()
+            self.näita_õppimise_kaarti()
             
-    def jargmine_oppimise_sona(self):
+    def järgmine_õppimise_sõna(self):
         """Mine järgmise sõna juurde."""
         self.praegune_index += 1
-        self.naita_oppimise_kaart()
+        self.näita_õppimise_kaarti()
         
     def alusta_testi(self):
-        """Alusta testimist."""
+        """Alusta testimist"""
         self.olek = "test"
-        self.testi_sonad = self.oppimise_sonad.copy()
-        random.shuffle(self.testi_sonad)
+        self.testi_sõnad = self.õppimise_sõnad.copy()
+        random.shuffle(self.testi_sõnad)
         self.praegune_index = 0
         self.skoor = 0
-        self.max_punktid = len(self.testi_sonad)
-        self.naita_testi_kusimus()
+        self.max_punktid = len(self.testi_sõnad)
+        self.näita_testi_küsimust()
         
-    def naita_testi_kusimus(self):
-        """Näita testi küsimust."""
+    def näita_testi_küsimust(self):
+        """Näita küsimust"""
         self.puhasta_sisu()
         
-        if self.praegune_index >= len(self.testi_sonad):
+        if self.praegune_index >= len(self.testi_sõnad):
             # Test läbi
-            self.naita_tulemust()
+            self.näita_tulemust()
             return
             
-        sona = self.testi_sonad[self.praegune_index]
+        sõna = self.testi_sõnad[self.praegune_index]
         
         tk.Label(self.sisu_frame, text=f"📝 TEST - Tase {self.tase}", 
                 font=("Arial", 14, "bold"), bg="white", fg="#2563eb").pack(pady=10)
                 
-        tk.Label(self.sisu_frame, text=f"Küsimus {self.praegune_index + 1} / {len(self.testi_sonad)}", 
+        tk.Label(self.sisu_frame, text=f"Küsimus {self.praegune_index + 1} / {len(self.testi_sõnad)}", 
                 font=("Arial", 10), bg="white", fg="gray").pack()
                 
         tk.Label(self.sisu_frame, text=f"Punktid: {self.skoor} / {self.max_punktid}", 
                 font=("Arial", 12, "bold"), bg="white", fg="#10b981").pack(pady=10)
         
         # Küsimus
-        tk.Label(self.sisu_frame, text=sona.get('sõna', ''), 
+        tk.Label(self.sisu_frame, text=sõna.get('sõna', ''), 
                 font=("Arial", 26, "bold"), bg="white", fg="#2563eb").pack(pady=30)
                 
         tk.Label(self.sisu_frame, text="Mis on selle sõna tõlge eesti keeles?", 
@@ -212,7 +206,7 @@ class SonaMangGUI:
         self.vastuse_entry.focus()
         self.vastuse_entry.bind('<Return>', lambda e: self.kontrolli_vastust())
         
-        # Kontrolli nupp
+        # "Kontrolli" nupp
         tk.Button(self.sisu_frame, text="✓ Kontrolli", command=self.kontrolli_vastust,
                  font=("Arial", 12), bg="#10b981", fg="white", width=15).pack(pady=10)
                  
@@ -222,26 +216,26 @@ class SonaMangGUI:
         self.tagasiside_silt.pack(pady=10)
         
     def kontrolli_vastust(self):
-        """Kontrolli kasutaja vastust."""
-        if self.praegune_index >= len(self.testi_sonad):
+        """Kasutaja vastuse kontrollimine"""
+        if self.praegune_index >= len(self.testi_sõnad):
             return
             
-        sona = self.testi_sonad[self.praegune_index]
+        sõna = self.testi_sõnad[self.praegune_index]
         kasutaja_vastus = self.vastuse_entry.get().strip()
-        oige_vastus = sona.get('tõlge', '')
+        õige_vastus = sõna.get('tõlge', '')
         
-        # Lihtne võrdlus (võib laiendada normalize funktsiooniga)
-        if kasutaja_vastus.lower() == oige_vastus.lower():
+        # Võrdlemine
+        if kasutaja_vastus.lower() == õige_vastus.lower():
             self.skoor += 1
             self.tagasiside_silt.config(text="✓ Õige!", fg="#10b981")
         else:
-            self.tagasiside_silt.config(text=f"✗ Vale! Õige: {oige_vastus}", fg="#ef4444")
+            self.tagasiside_silt.config(text=f"✗ Vale! Õige: {õige_vastus}", fg="#ef4444")
             
         self.praegune_index += 1
-        self.root.after(1500, self.naita_testi_kusimus)
+        self.root.after(1500, self.näita_testi_küsimust)
         
-    def naita_tulemust(self):
-        """Näita testi tulemust."""
+    def näita_tulemust(self):
+        """Näita testi tulemus"""
         self.puhasta_sisu()
         
         protsent = (self.skoor / self.max_punktid * 100) if self.max_punktid > 0 else 0
@@ -265,23 +259,23 @@ class SonaMangGUI:
         nupu_frame = tk.Frame(self.sisu_frame, bg="white")
         nupu_frame.pack(pady=30)
         
-        if protsent == 100 and str(self.tase + 1) in self.sonastik:
-            tk.Button(nupu_frame, text="➡️ Järgmine tase", command=self.jargmine_tase,
+        if protsent == 100 and str(self.tase + 1) in self.sõnastik:
+            tk.Button(nupu_frame, text="➡️ Järgmine tase", command=self.järgmine_tase,
                      font=("Arial", 12), bg="#2563eb", fg="white").pack(pady=5)
         
-        tk.Button(nupu_frame, text="🔄 Korda taset", command=self.alusta_oppimist,
+        tk.Button(nupu_frame, text="🔄 Korda taset", command=self.alusta_õppimist,
                  font=("Arial", 12)).pack(pady=5)
                  
-        tk.Button(nupu_frame, text="🏠 Tagasi menüüsse", command=self.naita_menu,
+        tk.Button(nupu_frame, text="🏠 Tagasi menüüsse", command=self.näita_menüüd,
                  font=("Arial", 12)).pack(pady=5)
                  
-    def jargmine_tase(self):
-        """Liigu järgmisele tasemele."""
+    def järgmine_tase(self):
+        """Liigu järgmisele tasemele"""
         self.tase += 1
-        self.naita_menu()
+        self.näita_menüüd()
         
     def salvesta_tulemus(self):
-        """Salvesta tulemus moodulisse `mängutulemused`."""
+        """Salvesta tulemus moodulisse 'mägutulemused'"""
         if add_result is None:
             messagebox.showerror("Viga", "Tulemuste salvestus pole saadaval")
             return

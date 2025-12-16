@@ -6,12 +6,12 @@ Kirjeldus: Lihtne sõnavara õppimise mäng.
 """
 
 import tkinter as tk
-from gui import SonaMangGUI
+from gui import SõnaMängGUI
 
 def main():
-    """Käivita graafiline kasutajaliides."""
+    """Käivita GUI"""
     root = tk.Tk()
-    app = SonaMangGUI(root)
+    app = SõnaMängGUI(root)
     root.mainloop()
 
 if __name__ == "__main__":
