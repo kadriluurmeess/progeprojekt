@@ -1,4 +1,4 @@
-# Hispaania Keele Õppemäng
+# Hispaania eele õppemäng
 Kadri Luurmees, Oskar Martsoo  
 Programmeerimine 
 2025
