@@ -9,7 +9,7 @@ import tkinter as tk
 from gui import SõnaMängGUI
 
 def main():
-    """Käivita GUI"""
+    """ Käivita GUI """
     root = tk.Tk()
     app = SõnaMängGUI(root)
     root.mainloop()

@@ -5,4 +5,4 @@ Programmeerimine
 
 ## Projekti kirjeldus
 
-Interaktiivne mäng hispaania keele sõnavara õppimiseks ja harjutamiseks. Programm pakub erinevaid raskusastmeid ja punktide kogumise võimalust.
+Interaktiivne mäng hispaania keele sõnavara õppimiseks ja harjutamiseks. Programm pakub erinevaid raskusastmeid ja mängude peale kokku kogunenud statistikat.
