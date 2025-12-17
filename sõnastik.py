@@ -1,4 +1,4 @@
-SONASTIK = {
+SÕNASTIK = {
     "1": {
         "tervitused": [
             {
